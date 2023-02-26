@@ -20,8 +20,7 @@ public class Util {
                             USER_NAME, PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
-            System.exit(0);
+
         }
         return connection;
     }

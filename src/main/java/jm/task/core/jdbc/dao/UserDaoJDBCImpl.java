@@ -15,7 +15,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
         try (Statement statement = Util.getPostgresqlConnection().createStatement()) {
             statement.execute("create table if not exists USERS (" +
-                    "id SERIAL NOT NULL PRIMARY KEY," +
+                    "id SERIAL PRIMARY KEY," +
                     "Name varchar(50) not null," +
                     "LastName varchar(50)," +
                     "Age smallint)");
@@ -67,12 +67,12 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = Util.getPostgresqlConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery("select * from USERS");
             while (resultSet.next()) {
-                User nUser = new User();
-                nUser.setId(resultSet.getLong("ID"));
-                nUser.setName(resultSet.getString("Name"));
-                nUser.setLastName(resultSet.getString("LastName"));
-                nUser.setAge(resultSet.getByte("Age"));
-                list.add(nUser);
+                User user = new User(resultSet.getString("name"),
+                        resultSet.getString("lastName"),
+                        resultSet.getByte("age"));
+                user.setId(resultSet.getLong("id"));
+                list.add(user);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
